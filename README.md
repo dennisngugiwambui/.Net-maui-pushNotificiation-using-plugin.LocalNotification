@@ -80,7 +80,95 @@ namespace ExampleApp
 # Sending a Notification
 To send a notification, use the following code in your application:
 
+The backened code should be implemented this way(Example the MainPage.xaml.cs)
 
+```
+using Plugin.LocalNotification;
+
+namespace ExampleApp
+{
+    public partial class MainPage : ContentPage
+    {
+        int count = 0;
+
+        public MainPage()
+        {
+            InitializeComponent();
+        }
+
+        private void OnCounterClicked(object sender, EventArgs e)
+        {
+            NotificationStatusLabel.Text = "Attempting to schedule notification...";
+
+            try
+            {
+                var request = new NotificationRequest
+                {
+                    NotificationId = 1337,
+                    Title = "MEDIUM",
+                    Subtitle = "Hello! I'm Erdal",
+                    Description = "Local Push Notification",
+                    BadgeNumber = 1,
+                    Schedule = new NotificationRequestSchedule
+                    {
+                        NotifyTime = DateTime.Now.AddSeconds(3),
+                    }
+                };
+
+                LocalNotificationCenter.Current.Show(request);
+                NotificationStatusLabel.Text = "Notification scheduled successfully";
+            }
+            catch (Exception ex)
+            {
+                NotificationStatusLabel.Text = $"Error scheduling notification: {ex.Message}";
+            }
+        }
+    }
+}
+```
+
+The button to trigger the notification should be (Example MainPage.xaml)
+
+```
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExampleApp.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+            <Image
+                Source="dotnet_bot.png"
+                HeightRequest="185"
+                Aspect="AspectFit"
+                SemanticProperties.Description="dot net bot in a race car number eight" />
+
+            <Label
+                Text="Hello, World!"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1" />
+
+            <Label
+                Text="Welcome to &#10;.NET Multi-platform App UI"
+                Style="{StaticResource SubHeadline}"
+                SemanticProperties.HeadingLevel="Level2"
+                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+
+            <Button
+                x:Name="CounterBtn"
+                Text="Click me" 
+                SemanticProperties.Hint="Counts the number of times you click"
+                Clicked="OnCounterClicked"
+                HorizontalOptions="Fill" />
+
+            <!-- Label to display the notification status -->
+            <Label x:Name="NotificationStatusLabel" Text="" TextColor="Green" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
+```
 
 ## Additional Configuration
 # Android-Specific Configuration
