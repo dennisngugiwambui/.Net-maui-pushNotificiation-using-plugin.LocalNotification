@@ -583,3 +583,9 @@ namespace ExampleApp
 
 ```
 
+Example Screenshot
+
+
+![image](https://github.com/dennisngugiwambui/.Net-maui-pushNotificiation-using-plugin.LocalNotification/assets/112067611/393a7870-c002-4de9-ae0a-aa51c488b9d0)
+
+
