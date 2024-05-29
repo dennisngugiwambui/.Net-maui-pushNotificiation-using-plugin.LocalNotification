@@ -28,3 +28,49 @@ To add notifications to your Android application, you need to install the Plugin
 Alternatively, you can install the package using the Package Manager Console:
 
 `Install-Package Plugin.LocalNotification`
+
+
+# Initialization
+After installing the package, initialize it in the MauiProgram.cs file.
+
+# Open MauiProgram.cs.
+Add the initialization code to the CreateMauiApp method.
+
+`.UseLocalNotification()`
+
+The updated code for MauiProgram.cs should be:
+
+```
+using Microsoft.Extensions.Logging;
+using Plugin.LocalNotification;
+
+namespace ExampleApp
+{
+    public static class MauiProgram
+    {
+        public static MauiApp CreateMauiApp()
+        {
+            var builder = MauiApp.CreateBuilder();
+            builder
+                .UseMauiApp<App>()
+                .UseLocalNotification()
+                .ConfigureFonts(fonts =>
+                {
+                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                });
+
+#if DEBUG
+    		builder.Logging.AddDebug();
+#endif
+
+
+            //LocalNotificationCenter.CreateNotificationChannel();
+            //LocalNotificationCenter.Current.Initialize();
+
+            return builder.Build();
+        }
+    }
+}
+
+```
